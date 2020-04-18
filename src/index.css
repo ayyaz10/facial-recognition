@@ -5,6 +5,17 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+
+  background: rgb(0,46,112);
+  background: linear-gradient(90deg, rgba(0,46,112,1) 10%, rgba(19,135,191,1) 78%);
+}
+
+button {
+  border: 0;
+  background: rgb(32,96,187);
+  background: linear-gradient(90deg, rgba(32,96,187,1) 0%, rgba(14,145,208,1) 48%);
+  color: #fff;
+  padding: 5px 20px;
 }
 
 code {
