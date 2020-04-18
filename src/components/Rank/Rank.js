@@ -2,7 +2,7 @@ import React from 'react';
 
 const Rank = () => {
     return (
-        <h1 className="pa1 near-white">Name, Your Rank: #1</h1>
+        <p className="f4 pa3 near-white">Name, Your Rank: #1</p>
     )
 }
 export default Rank;

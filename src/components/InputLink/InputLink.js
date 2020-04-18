@@ -3,7 +3,7 @@ import './InputLink.css';
 
 const InputLink = () => {
     return (
-        <div>
+        <div className="input-link">
             <input type="text"/>
             <button className="pointer">Detect</button>
         </div>
