@@ -30,9 +30,9 @@ class App extends Component {
 
   onSubmit = () => {
     this.setState({imgUrl: this.state.input})
-    app.models.predict(Clarifai.LANDSCAPE_QUALITY, this.state.input).then(
+    app.models.predict(Clarifai.FACE_DETECT_MODEL, this.state.input).then(
     function(response) {
-      console.log(response)
+      console.log(response.outputs[0].data.regions[0].region_info.bounding_box)
     },
     function(err) {
       // there was an error
