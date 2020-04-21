@@ -1,0 +1,24 @@
+.bounding-box {
+    position: absolute;
+    display: flex;
+    box-shadow: 0 0 0 3px #149df2 inset; 
+    flex-wrap: wrap;
+    justify-content: center;
+    cursor: pointer;
+}
+
+#inputImg {
+    /* width: 500px; */
+    /* display: block; */
+    /* position: absolute; */
+    /* left: 150px; */
+    /* right: 150px; */
+    /* width: 500px; */
+    /* margin: 0px auto; */
+    /* display:none; */
+    /* justify-content: center; */
+    /* border: 2px solid red; */
+    /* margin-left: 300px; */
+
+ 
+}
