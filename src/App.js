@@ -19,56 +19,34 @@ class App extends Component {
     this.state = {
       input: '',
       imgUrl: '', 
-      box: [],
+      boxArray: [],
     }
   }
 
   calculateFaceLocation = (data) => {
       const clarifaiFace = data.outputs[0].data.regions;
-      // console.log(clarifaiFace[0])
-      // [i].region_info.bounding_box;
       let measureObj;
-      let array = [];
-      clarifaiFace.forEach((each, i) => {
-        const boundingBox = each.region_info.bounding_box;
+      let regionArray = [];
       const image = document.getElementById('inputImg');
-      const width = image.width;
+      const width = Number(image.width);
       const height = Number(image.height);
-      measureObj = {
-        leftCol: boundingBox.left_col * width,
-        topRow: boundingBox.top_row * height,
-        rightCol: width - (boundingBox.right_col * width), 
-        bottomRow: height - (boundingBox.bottom_row * height)
+      clarifaiFace.forEach(each => {
+        const boundingBox = each.region_info.bounding_box;
+        measureObj = {
+          leftCol: boundingBox.left_col * width,
+          topRow: boundingBox.top_row * height,
+          rightCol: width - (boundingBox.right_col * width), 
+          bottomRow: height - (boundingBox.bottom_row * height)
       }
-      array.push(measureObj)
+      regionArray.push(measureObj);
     })
-    return array;
+    return regionArray;
   }
-
-  // calculateFaceLocation2 = (data) => {
-  //   const clarifaiFace = data.outputs[0].data.regions[1].region_info.bounding_box;
-  //   // console.log(clarifaiFace)
-  //   const image = document.getElementById('inputImg');
-  //   const width = image.width;
-  //   const height = Number(image.height);
-  //   return {
-  //     leftCol: clarifaiFace.left_col * width,
-  //     topRow: clarifaiFace.top_row * height,
-  //     rightCol: width - (clarifaiFace.right_col * width), 
-  //     bottomRow: height - (clarifaiFace.bottom_row * height)
-  //   }
-  // }
 
 
   displayFace = (box) => {
-    // console.log(box.length)
-    // console.log(box)
-    
-    let joined = this.state.box.concat(box);
-    console.log(joined)
-    this.setState({ box: joined })
-    // console.log(this.state.box)
-
+    let joined = this.state.boxArray.concat(box);
+    this.setState({ boxArray: joined })
   }
 
   onInputChange = (event)=> {
@@ -79,12 +57,12 @@ class App extends Component {
     this.setState({imgUrl: this.state.input})
     app.models.predict(Clarifai.FACE_DETECT_MODEL, this.state.input)
     .then((response) =>{
-      const data = this.calculateFaceLocation(response)
-      for(let i = 0; i < data.length; i++){
-        this.displayFace(data[i])
+      const regionArrayData = this.calculateFaceLocation(response)
+      for(let i = 0; i < regionArrayData.length; i++){
+        this.displayFace(regionArrayData[i])
       }
     })
-    // .catch(err => console.log(err))
+    .catch(err => console.log(err))
   }
 
   render() {
@@ -96,10 +74,7 @@ class App extends Component {
         </Header>
         <Rank />
         <InputLink onInputChange={this.onInputChange} onSubmit={this.onSubmit}/>
-        
-        <Result 
-        box={this.state.box} 
-        imgUrl={this.state.imgUrl}/>
+        <Result boxArray={this.state.boxArray} imgUrl={this.state.imgUrl}/>
       
       </div>
     );
