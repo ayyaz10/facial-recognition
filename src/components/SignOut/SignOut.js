@@ -1,9 +1,9 @@
 import React from 'react';
 
-const SignOut = () => {
+const SignOut = ({ onRouteChange }) => {
     return (
         <nav>
-            <p className='f3 link dim underline pa3 pointer grow'>Sign Out</p>
+            <p onClick={() => onRouteChange('signin')} className='f3 link dim underline pa3 pointer grow'>Sign Out</p>
         </nav>
     )
 }

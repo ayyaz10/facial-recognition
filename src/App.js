@@ -21,6 +21,7 @@ class App extends Component {
       input: '',
       imgUrl: '', 
       boxArray: [],
+      route: 'signin'
     }
   }
 
@@ -68,18 +69,25 @@ class App extends Component {
     .catch(err => console.log(err))
   }
 
+  onRouteChange = (route) => {
+    this.setState({route: route})
+  }
+
   render() {
     return (
       <div className="App">
         <Header>
             <Logo />
-            <SignOut />
+            <SignOut onRouteChange={this.onRouteChange}/>
         </Header>
-        <Rank />
-        <InputLink onInputChange={this.onInputChange} onSubmit={this.onSubmit}/>
-        <Result boxArray={this.state.boxArray} imgUrl={this.state.imgUrl}/>
-        <Signin />
-      
+        {this.state.route === 'signin' 
+        ? <Signin onRouteChange={this.onRouteChange}/>
+        : <div>
+            <Rank />
+            <InputLink onInputChange={this.onInputChange} onSubmit={this.onSubmit}/>
+            <Result boxArray={this.state.boxArray} imgUrl={this.state.imgUrl}/>
+          </div>
+        }
       </div>
     );
   }
