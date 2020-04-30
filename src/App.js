@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Clarifai from 'clarifai';
 import Logo from './components/Logos/Logo.js';
 import SignOut from './components/SignOut/SignOut.js';
+import Signin from './components/Signin/Signin.js';
 import Header from './components/Header/Header.js';
 import Rank from './components/Rank/Rank.js';
 import InputLink from './components/InputLink/InputLink.js';
@@ -45,6 +46,7 @@ class App extends Component {
 
 
   displayFace = (box) => {
+
     let joined = this.state.boxArray.concat(box);
     this.setState({ boxArray: joined })
   }
@@ -57,6 +59,7 @@ class App extends Component {
     this.setState({imgUrl: this.state.input})
     app.models.predict(Clarifai.FACE_DETECT_MODEL, this.state.input)
     .then((response) =>{
+      console.log(response)
       const regionArrayData = this.calculateFaceLocation(response)
       for(let i = 0; i < regionArrayData.length; i++){
         this.displayFace(regionArrayData[i])
@@ -75,6 +78,7 @@ class App extends Component {
         <Rank />
         <InputLink onInputChange={this.onInputChange} onSubmit={this.onSubmit}/>
         <Result boxArray={this.state.boxArray} imgUrl={this.state.imgUrl}/>
+        <Signin />
       
       </div>
     );
