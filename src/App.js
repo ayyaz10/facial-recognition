@@ -3,6 +3,7 @@ import Clarifai from 'clarifai';
 import Logo from './components/Logos/Logo.js';
 import SignOut from './components/SignOut/SignOut.js';
 import Signin from './components/Signin/Signin.js';
+import Register from './components/Register/Register.js';
 import Header from './components/Header/Header.js';
 import Rank from './components/Rank/Rank.js';
 import InputLink from './components/InputLink/InputLink.js';
@@ -80,13 +81,18 @@ class App extends Component {
             <Logo />
             <SignOut onRouteChange={this.onRouteChange}/>
         </Header>
-        {this.state.route === 'signin' 
-        ? <Signin onRouteChange={this.onRouteChange}/>
-        : <div>
+        {this.state.route === 'home' 
+        ?  <div>
             <Rank />
             <InputLink onInputChange={this.onInputChange} onSubmit={this.onSubmit}/>
             <Result boxArray={this.state.boxArray} imgUrl={this.state.imgUrl}/>
           </div>
+          
+        : ( 
+          this.state.route === 'signin'
+          ? <Signin onRouteChange={this.onRouteChange}/>
+          : <Register onRouteChange={this.onRouteChange}/>
+        )
         }
       </div>
     );
