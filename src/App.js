@@ -22,7 +22,8 @@ class App extends Component {
       input: '',
       imgUrl: '', 
       boxArray: [],
-      route: 'signin'
+      route: 'signin',
+      isSignedIn: false
     }
   }
 
@@ -71,6 +72,11 @@ class App extends Component {
   }
 
   onRouteChange = (route) => {
+    if(route === 'signout') {
+      this.setState({isSignedIn: false})
+    } else {
+      this.setState({isSignedIn: true})
+    }
     this.setState({route: route})
   }
 
@@ -79,7 +85,7 @@ class App extends Component {
       <div className="App">
         <Header>
             <Logo />
-            <SignOut onRouteChange={this.onRouteChange}/>
+            <SignOut isSignedIn={this.state.isSignedIn} onRouteChange={this.onRouteChange}/>
         </Header>
         {this.state.route === 'home' 
         ?  <div>
