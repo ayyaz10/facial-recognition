@@ -4,9 +4,7 @@ import './SignOut.css';
 const SignOut = ({ onRouteChange, isSignedIn }) => {
         if (isSignedIn) {
             return(
-            <nav>
                 <p onClick={() => onRouteChange('signout')} className='f3 link dim underline pa3 pointer grow'>Sign Out</p>
-            </nav>
             )
     } else {
         return(
