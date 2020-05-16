@@ -4,22 +4,22 @@ class Register extends React.Component {
     constructor(props){
         super(props);
         this.state = {
-            signupName: '',
-            signupEmail: '',
-            signupPassword: ''
+            name: '',
+            email: '',
+            password: ''
         }
     }
 
     onNameChange = (event) => {
-        this.setState({signupName: event.target.value});
+        this.setState({name: event.target.value});
     }
 
     onEmailChange = (event) => {
-        this.setState({signupEmail: event.target.value});
+        this.setState({email: event.target.value});
     }
 
     onPasswordChange = (event) => {
-        this.setState({signupPassword: event.target.value});
+        this.setState({password: event.target.value});
     }
 
     onSubmitSignup = () => {
@@ -27,14 +27,16 @@ class Register extends React.Component {
             method: 'post',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({
-                name: this.state.signupName,
-                email: this.state.signupEmail,
-                password: this.state.signupPassword
+                name: this.state.name,
+                email: this.state.email,
+                password: this.state.password
             })
         })
         .then(response => response.json())
-        .then(data => {
-            if(data === 'success'){
+        .then(user => {
+            if(user){
+                console.log(user)
+                this.props.loaduser(user);
                 this.props.onRouteChange('home')
             }
         })
@@ -42,7 +44,6 @@ class Register extends React.Component {
     }
     
     render(){
-        const {onRouteChange} = this.props;
         return (
             <article className="br3 pa2 ba dark-gray b--black-10 mv4 w-100 w-50-m w-25-l mw6 shadow-5 center">
                 <main className="pa2 black-80">
