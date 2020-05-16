@@ -27,6 +27,7 @@ class App extends Component {
     }
   }
 
+
   calculateFaceLocation = (data) => {
       const clarifaiFace = data.outputs[0].data.regions;
       let measureObj;
