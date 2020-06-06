@@ -79,7 +79,15 @@ class App extends Component {
     this.setState({imgUrl: this.state.input})
     app.models.predict(Clarifai.FACE_DETECT_MODEL, this.state.input)
     .then((response) =>{
-      console.log(response)
+      if(response) {
+        fetch('http://localhost:3000/image', {
+          method: 'pust',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify({
+              id: this.state.user.id
+          })
+        })
+      }
       const regionArrayData = this.calculateFaceLocation(response)
       for(let i = 0; i < regionArrayData.length; i++){
         this.displayFace(regionArrayData[i])
@@ -114,7 +122,7 @@ class App extends Component {
         : ( 
           this.state.route === 'signin'
           ? <Signin onRouteChange={this.onRouteChange}/>
-          : <Register loaduser={this.loaduser} onRouteChange={this.onRouteChange}/>
+          : <Register loaduser={this.loaduser } onRouteChange={this.onRouteChange}/>
         )
         }
       </div>
