@@ -32,7 +32,7 @@ class App extends Component {
         joined: ''
       }
     }
-  }
+  } 
 
   loaduser = (data) => {
     this.setState({user: {
@@ -78,14 +78,21 @@ class App extends Component {
   onSubmit = () => {
     this.setState({imgUrl: this.state.input})
     app.models.predict(Clarifai.FACE_DETECT_MODEL, this.state.input)
-    .then((response) =>{
+    .then(response => {
       if(response) {
+        // console.log(this.user.id)
         fetch('http://localhost:3000/image', {
-          method: 'pust',
+          method: 'put',
           headers: {'Content-Type': 'application/json'},
           body: JSON.stringify({
               id: this.state.user.id
           })
+        })
+        .then(response => response.json())
+        .then(count => {
+          this.setState(Object.assign(this.state.user, {
+            entries: count
+          }))
         })
       }
       const regionArrayData = this.calculateFaceLocation(response)
@@ -114,15 +121,15 @@ class App extends Component {
         </Header>
         {this.state.route === 'home' 
         ?  <div>
-            <Rank />
+            <Rank name={this.state.user.name} entries={this.state.user.entries}/>
             <InputLink onInputChange={this.onInputChange} onSubmit={this.onSubmit}/>
             <Result boxArray={this.state.boxArray} imgUrl={this.state.imgUrl}/>
           </div>
           
         : ( 
           this.state.route === 'signin'
-          ? <Signin onRouteChange={this.onRouteChange}/>
-          : <Register loaduser={this.loaduser } onRouteChange={this.onRouteChange}/>
+          ? <Signin loaduser={this.loaduser} onRouteChange={this.onRouteChange}/>
+          : <Register loaduser={this.loaduser} onRouteChange={this.onRouteChange}/>
         )
         }
       </div>
