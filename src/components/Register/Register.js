@@ -6,7 +6,19 @@ class Register extends React.Component {
         this.state = {
             name: '',
             email: '',
-            password: ''
+            password: '',
+            passwordState: 'password',
+            spanText: 'Show'
+        }
+    }
+
+    onChangePasswordState = (event) => {
+        if(this.state.passwordState === 'password') {
+            this.setState({passwordState: 'text'})
+            this.setState({spanText: 'Hide'})
+        } else {
+            this.setState({passwordState: 'password'})
+            this.setState({spanText: 'Show'})
         }
     }
 
@@ -52,15 +64,16 @@ class Register extends React.Component {
                         <legend className="f2 ph0 mh0 fw6 center">Register</legend>
                         <div className="mt3">
                             <label className="db fw4 lh-copy f6" htmlFor="name">Name</label>
-                            <input onChange={this.onNameChange} className="pa2 input-reset ba bg-transparent w-100 measure" type="text" name="name" />
+                            <input onChange={this.onNameChange} className="w-100 pa2 input-reset ba bg-transparent measure" type="text" name="name" />
                         </div>
                         <div className="mt3">
                             <label className="db fw4 lh-copy f6" htmlFor="email-address">Email address</label>
-                            <input onChange={this.onEmailChange} className="pa2 input-reset ba bg-transparent w-100 measure" type="email" name="email-address"  id="email-address" />
+                            <input onChange={this.onEmailChange} className="w-100  pa2 input-reset ba bg-transparent measure" type="email" name="email-address"  id="email-address" />
                         </div>
                         <div className="mt3">
                             <label className="db fw4 lh-copy f6" htmlFor="password">Password</label>
-                            <input onChange={this.onPasswordChange} className="b pa2 input-reset ba bg-transparent" type="password" name="password"  id="password" />
+                            <input onChange={this.onPasswordChange} className="w-100 pa2 input-reset ba bg-transparent measure" type={this.state.passwordState} name="password"  id="password" />
+                            <span style={{position: 'relative', bottom: "26px", left: '120px', cursor: 'pointer', display: 'block'}} onClick={this.onChangePasswordState}>{this.state.spanText}   </span>
                         </div>
                     </fieldset>
                     <div className="mt3"><input onClick={this.onSubmitSignup} className="b ph3 pv2 input-reset ba b--black bg-transparent grow f6 pointer" type="submit" value="Register"/></div>
