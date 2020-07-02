@@ -46,9 +46,9 @@ class Register extends React.Component {
         })
         .then(response => response.json())
         .then(user => {
-            if(user){
+            if(user.id){
                 this.props.loaduser(user);
-                this.props.onRouteChange('home')
+                this.props.onRouteChange('home')    
             }
         })
 
@@ -73,7 +73,7 @@ class Register extends React.Component {
                         <div className="mt3">
                             <label className="db fw4 lh-copy f6" htmlFor="password">Password</label>
                             <input onChange={this.onPasswordChange} className="w-100 pa2 input-reset ba bg-transparent measure" type={this.state.passwordState} name="password"  id="password" />
-                            <span style={{position: 'relative', bottom: "26px", left: '120px', cursor: 'pointer', display: 'block'}} onClick={this.onChangePasswordState}>{this.state.spanText}   </span>
+                            <span style={{position: 'relative', bottom: "26px", left: '120px', cursor: 'pointer'}} onClick={this.onChangePasswordState}>{this.state.spanText}   </span>
                         </div>
                     </fieldset>
                     <div className="mt3"><input onClick={this.onSubmitSignup} className="b ph3 pv2 input-reset ba b--black bg-transparent grow f6 pointer" type="submit" value="Register"/></div>
