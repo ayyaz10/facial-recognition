@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import Clarifai from 'clarifai';
 import Logo from './components/Logos/Logo.js';
 import SignOut from './components/SignOut/SignOut.js';
 import Signin from './components/Signin/Signin.js';
@@ -10,10 +9,6 @@ import InputLink from './components/InputLink/InputLink.js';
 import Result from './components/Result/Result.js';
 import './App.css';
 
-
-const app = new Clarifai.App({
-  apiKey: '90ee53e5901f478ba513e2ecf69ea73c'
- });
 
 const initialState = {
   input: '',
@@ -53,6 +48,7 @@ class App extends Component {
       const image = document.getElementById('inputImg');
       const width = Number(image.width);
       const height = Number(image.height);
+      
       clarifaiFace.forEach(each => {
         const boundingBox = each.region_info.bounding_box;
         measureObj = {
@@ -78,18 +74,25 @@ class App extends Component {
   }
 
   onSubmit = () => {
-    this.setState({imgUrl: this.state.input})
-    app.models.predict(Clarifai.FACE_DETECT_MODEL, this.state.input)
+    this.setState({imgUrl: this.state.input});
+
+    fetch('http://localhost:3000/imageurl', {
+      method: 'post',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+          input: this.state.input
+      })
+    })
+    .then(response => response.json())
     .then(response => {
       if(response) {
-        // console.log(this.user.id)
-        fetch('http://localhost:3000/image', {
-          method: 'put',
-          headers: {'Content-Type': 'application/json'},
-          body: JSON.stringify({
-              id: this.state.user.id
+          fetch('http://localhost:3000/image', {
+            method: 'put',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({
+                id: this.state.user.id
+            })
           })
-        })
         .then(response => response.json())
         .then(count => {
           this.setState(Object.assign(this.state.user, {
