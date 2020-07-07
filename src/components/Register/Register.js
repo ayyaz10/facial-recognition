@@ -35,7 +35,7 @@ class Register extends React.Component {
     }
 
     onSubmitSignup = () => {
-        fetch('http://localhost:3000/register', {
+        fetch('https://facial-recognition-123.herokuapp.com/register', {
             method: 'post',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({
@@ -50,6 +50,9 @@ class Register extends React.Component {
                 this.props.loaduser(user);
                 this.props.onRouteChange('home')    
             }
+        })
+        .catch((err) => {
+            console.log('getting error' + err)
         })
 
     }
